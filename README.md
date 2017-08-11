@@ -1,11 +1,9 @@
 [![CircleCI](https://circleci.com/gh/sdt/docker-raspberry-pi-cross-compiler.svg?style=svg)](https://circleci.com/gh/sdt/docker-raspberry-pi-cross-compiler)
 # Raspberry Pi Cross-Compiler in a Docker Container
 
-An easy-to-use  all-in-one cross compiler for the Raspberry Pi.
+An easy-to-use  all-in-one cross compiler for NDN projects on the Raspberry Pi.
 
-This project is available as [sdthirlwall/raspberry-pi-cross-compiler](https://registry.hub.docker.com/u/sdthirlwall/raspberry-pi-cross-compiler/) on [Docker Hub](https://hub.docker.com/), and as [sdt/docker-raspberry-pi-cross-compiler](https://github.com/sdt/docker-raspberry-pi-cross-compiler) on [GitHub](https://github.com).
-
-Please raise any issues on the [GitHub issue tracker](https://github.com/sdt/docker-raspberry-pi-cross-compiler/issues) as I don't get notified about Docker Hub comments.
+This projects is based on [sdt/docker-raspberry-pi-cross-compiler](https://github.com/sdt/docker-raspberry-pi-cross-compiler).
 
 ## Contents
 
@@ -18,7 +16,7 @@ Please raise any issues on the [GitHub issue tracker](https://github.com/sdt/doc
 
 ## Features
 
-* The [gcc-linaro-arm-linux-gnueabihf-raspbian-x64 toolchain](https://github.com/raspberrypi/tools/tree/master/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64) from [raspberrypi/tools](https://github.com/raspberrypi/tools)
+* The [arm-rpi-4.9.3-linux-gnueabihf toolchain](https://github.com/raspberrypi/tools/tree/master/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf) from [raspberrypi/tools](https://github.com/raspberrypi/tools)
 * Raspbian sysroot from [sdhibit/docker-rpi-raspbian](https://github.com/sdhibit/docker-rpi-raspbian) :new:
 * Easy installation of raspbian packages into the sysroot using the [customised qemu arm emulator](https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/) from [resin-io-projects/armv7hf-debian-qemu](https://github.com/resin-io-projects/armv7hf-debian-qemu) :new:
 * Easy-to-use front end wrapper program `rpxc`.
@@ -31,7 +29,8 @@ To install the helper script, run the image with no arguments, and redirect the 
 
 eg.
 ```
-docker run sdthirlwall/raspberry-pi-cross-compiler > ~/bin/rpxc
+docker pull registry.gitlab.com/named-data/docker-raspberry-pi-ndn-cross-compiler
+docker run registry.gitlab.com/named-data/docker-raspberry-pi-ndn-cross-compiler > ~/bin/rpxc
 chmod +x ~/bin/rpxc
 ```
 
@@ -53,13 +52,13 @@ To force a command to run inside the container (in case of a name clash with a b
 
 `rpxc install-debian [--update] package packages...`
 
-Install native packages into the docker image. Changes are committed back to the sdthirlwall/raspberry-pi-cross-compiler image.
+Install native packages into the docker image. Changes are committed back to the registry.gitlab.com/named-data/docker-raspberry-pi-ndn-cross-compiler image.
 
 #### install-raspbian
 
 `rpxc install-raspbian [--update] package packages...`
 
-Install raspbian packages from the raspbian repositories into the sysroot of thedocker image. Changes are committed back to the sdthirlwall/raspberry-pi-cross-compiler image.
+Install raspbian packages from the raspbian repositories into the sysroot of thedocker image. Changes are committed back to the registry.gitlab.com/named-data/docker-raspberry-pi-ndn-cross-compiler image.
 
 #### update-image
 
@@ -95,7 +94,7 @@ Default: `~/.rpxc`
 
 The docker image to run.
 
-Default: sdthirlwall/raspberry-pi-cross-compiler
+Default: registry.gitlab.com/named-data/docker-raspberry-pi-ndn-cross-compiler
 
 ### RPXC_ARGS / --args &lt;docker-run-args&gt;
 
@@ -108,7 +107,7 @@ Using `rpxc install-debian` and `rpxc install-raspbian` are really only intended
 ### Create a Dockerfile
 
 ```Dockerfile
-FROM sdthirlwall/raspberry-pi-cross-compiler
+FROM registry.gitlab.com/named-data/docker-raspberry-pi-ndn-cross-compiler
 
 # Install some native build-time tools
 RUN install-debian scons
@@ -146,4 +145,4 @@ And call it as `rpxc ./mymake.sh`
 
 ## Examples
 
-See the [examples directory](https://github.com/sdt/docker-raspberry-pi-cross-compiler/tree/master/example) for some real examples.
+TBD
