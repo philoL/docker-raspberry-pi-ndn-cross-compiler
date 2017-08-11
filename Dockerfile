@@ -17,7 +17,7 @@ RUN apt-get update \
 
 # Here is where we hardcode the toolchain decision.
 ENV HOST=arm-linux-gnueabihf \
-    TOOLCHAIN=gcc-linaro-arm-linux-gnueabihf-raspbian-x64 \
+    TOOLCHAIN=arm-rpi-4.9.3-linux-gnueabihf \
     RPXC_ROOT=/rpxc
 
 #    TOOLCHAIN=arm-rpi-4.9.3-linux-gnueabihf \
@@ -55,5 +55,11 @@ RUN curl -Ls https://github.com/sdhibit/docker-rpi-raspbian/raw/master/raspbian.
 
 COPY image/ /
 
+WORKDIR $RPXC_ROOT
+RUN rsync -ar $HOST/sysroot/ sysroot/
+
 WORKDIR /build
+RUN install-raspbian --update build-essential libboost-all-dev libcrypto++-dev libsqlite3-dev libssl-dev libpcap-dev
+RUN install-debian --update python pkg-config
+
 ENTRYPOINT [ "/rpxc/entrypoint.sh" ]
